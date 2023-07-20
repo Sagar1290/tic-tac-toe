@@ -2,6 +2,7 @@
 #include <stdlib.h>
 using namespace std;
 
+//board initialize
 char board[3][3] = {{'1','2','3'},{'4','5','6'},{'7','8','9'}};
 
 int choice;
@@ -11,11 +12,11 @@ bool draw = false;
 
 //Function to show the current status of the gaming board
 
-void display_board(){
+void boardDisplay(){
 
-    //Rander Game Board LAYOUT
+    //Render Game Board LAYOUT
 
-    cout<<"PLAYER - 1 [X]\t PLAYER - 2 [O]\n\n";
+    cout<<"\tPLAYER - 1 [X]\t PLAYER - 2 [O]\n\n";
     cout<<"\t\t     |     |     \n";
     cout<<"\t\t  "<<board[0][0]<<"  | "<<board[0][1]<<"  |  "<<board[0][2]<<" \n";
     cout<<"\t\t_____|_____|_____\n";
@@ -29,7 +30,7 @@ void display_board(){
 
 //Function to get the player input and update the board
 
-void player_turn(){
+void boardUpdate(){
     if(turn == 'X'){
         cout<<"\n\tPlayer - 1 [X] turn : ";
     }
@@ -54,7 +55,7 @@ void player_turn(){
         case 8: row=2; column=1; break;
         case 9: row=2; column=2; break;
         default:
-            cout<<"Invalid Move";
+            cout<<"\tInvalid Move";
     }
 
     if(turn == 'X' && board[row][column] != 'X' && board[row][column] != 'O'){
@@ -69,55 +70,60 @@ void player_turn(){
         turn = 'X';
     }else {
         //if input position already filled
-        cout<<"Box already filled!n Please choose another!!\n\n";
-        player_turn();
+        cout<<"\tBox already filled!\n \tPlease choose another!!\n\n";
+        boardUpdate();
     }
     /* Ends */
-    display_board();
+    boardDisplay();
     system("cls");
+    cout<<"\n\n\n\n\n";
 }
 
 //Function to get the game status e.g. GAME WON, GAME DRAW GAME IN CONTINUE MODE
 
-bool gameover(){
-    //checking the win for Simple Rows and Simple Column
+bool gameContinue(){
+    //checking if any Row or Column matched
     for(int i=0; i<3; i++)
-    if(board[i][0] == board[i][1] && board[i][0] == board[i][2] || board[0][i] == board[1][i] && board[0][i] == board[2][i])
-    return false;
+    {
+        if(board[i][0] == board[i][1] && board[i][0] == board[i][2] || board[0][i] == board[1][i] && board[0][i] == board[2][i])
+        return false;
 
-    //checking the win for both diagonal
-
-    if(board[0][0] == board[1][1] && board[0][0] == board[2][2] || board[0][2] == board[1][1] && board[0][2] == board[2][0])
-    return false;
-
-    //Checking the game is in continue mode or not
+        //checking if diagonal matched or not
+        if(board[0][0] == board[1][1] && board[0][0] == board[2][2] || board[0][2] == board[1][1] && board[0][2] == board[2][0])
+        return false;
+    }
+    //Checking if continue or NOT
     for(int i=0; i<3; i++)
-    for(int j=0; j<3; j++)
-    if(board[i][j] != 'X' && board[i][j] != 'O')
-    return true;
-
-    //Checking the if game already draw
+    {
+        for(int j=0; j<3; j++)
+        if(board[i][j] != 'X' && board[i][j] != 'O')
+        return true;
+    }
+    //Checking if game is DRAW
     draw = true;
     return false;
 }
 
-//Program Main Method
-
 int main()
 {
-    cout<<"\t\t\t T I C -- T A C -- T O E -- G A M E\t\t\t";
-    cout<<"\n\t\t\t\t FOR 2 PLAYERS\n\t\t\t";
-    while(gameover()){
-        display_board();
-        player_turn();
-        gameover();
+	cout<<endl;
+	cout<<endl;
+	cout<<endl;
+    cout<<"\t\t\t T I C K -- T A C -- T O E -- G A M E\t\t\t";
+    cout<<"\n\t\t\t\t FOR 2 PLAYERS\n\n";
+    while(gameContinue()){
+        boardDisplay();
+        boardUpdate();
+        gameContinue();
     }
     if(turn == 'X' && draw == false){
-        cout<<"\n\n Congratulations!Player with 'X' has won the game";
+        cout<<"\n\n Congratulations!Player2 with 'O' has won the game";
     }
     else if(turn == 'O' && draw == false){
-        cout<<"\n\n Congratulations! Player with 'O' has won the game";
+        cout<<"\n\n Congratulations! Player1 with 'X' has won the game";
     }
     else
     cout<<"\n\nGAME DRAW!!!\n\n";
+    
+    return 0;
 } 
