@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
+#include <windows.h>
 using namespace std;
 
 //board initialize
@@ -9,7 +10,9 @@ int choice;
 int row,column;
 char turn = 'X';
 bool draw = false;
-
+string p1 = "Congratulations! Player1 with 'X' won the game";
+string p2 = "Congratulations! Player2 with 'O' won the game";
+string d = "You both played well! The game is DRAWN";
 //Function to show the current status of the gaming board
 
 void boardDisplay(){
@@ -84,46 +87,73 @@ void boardUpdate(){
 bool gameContinue(){
     //checking if any Row or Column matched
     for(int i=0; i<3; i++)
-    {
-        if(board[i][0] == board[i][1] && board[i][0] == board[i][2] || board[0][i] == board[1][i] && board[0][i] == board[2][i])
-        return false;
+    if(board[i][0] == board[i][1] && board[i][0] == board[i][2] || board[0][i] == board[1][i] && board[0][i] == board[2][i])
+    return false;
 
-        //checking if diagonal matched or not
-        if(board[0][0] == board[1][1] && board[0][0] == board[2][2] || board[0][2] == board[1][1] && board[0][2] == board[2][0])
-        return false;
-    }
+    //checking if diagonal matched or not
+
+    if(board[0][0] == board[1][1] && board[0][0] == board[2][2] || board[0][2] == board[1][1] && board[0][2] == board[2][0])
+    return false;
+
     //Checking if continue or NOT
     for(int i=0; i<3; i++)
-    {
-        for(int j=0; j<3; j++)
-        if(board[i][j] != 'X' && board[i][j] != 'O')
-        return true;
-    }
+    for(int j=0; j<3; j++)
+    if(board[i][j] != 'X' && board[i][j] != 'O')
+    return true;
+
     //Checking if game is DRAW
     draw = true;
     return false;
 }
+
+//Program Main Method
 
 int main()
 {
 	cout<<endl;
 	cout<<endl;
 	cout<<endl;
-    cout<<"\t\t\t T I C K -- T A C -- T O E -- G A M E\t\t\t";
-    cout<<"\n\t\t\t\t FOR 2 PLAYERS\n\n";
+    cout << "\t\t<================================================================================>" << endl;
+    cout << "\t\t|                        WELCOME TO TIC-TAC-TOE Game!                             |" << endl;
+    cout << "\t\t|       Fill The numbers with X or O and match a 3x3 row or column or diagonal    |" << endl;
+    cout << "\t\t<================================================================================>" << endl;
+    cout<<endl;
     while(gameContinue()){
         boardDisplay();
         boardUpdate();
         gameContinue();
     }
     if(turn == 'X' && draw == false){
-        cout<<"\n\n Congratulations!Player2 with 'O' has won the game";
+        cout<<"\n\n";
+        int i=0;
+        while(p2[i] != '\0')
+	    {
+			cout<<p2[i];
+	        Sleep(100);
+	        i++;
+    	}
     }
     else if(turn == 'O' && draw == false){
-        cout<<"\n\n Congratulations! Player1 with 'X' has won the game";
+        cout<<"\n\n";
+        int i=0;
+        while(p1[i] != '\0')
+	    {
+			cout<<p1[i];
+	        Sleep(100);
+	        i++;
+    	}
     }
     else
-    cout<<"\n\nGAME DRAW!!!\n\n";
+    {
+    	cout<<"\n\n";
+    	int i=0;
+        while(d[i] != '\0')
+	    {
+			cout<<d[i];
+	        Sleep(100);
+	        i++;
+    	}
+	}
     
     return 0;
 } 
